@@ -1,26 +1,30 @@
 import React, {useState} from 'react';
 import TableA from "./TableA";
 import TableB from "./TableB";
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 
 function App() {
 
   let [tableAList, setTableAList] = useState([]);
   let [tableBList, setTableBList] = useState([]);
+  let [loading, setLoading] = useState(false);
 
-  function createData(address, city, state) {
-    return { address, city, state };
-  }
 
   function removeDuplicate() {
-    
-    const rows = [
-      createData('836 Cornfield Dr', 'Arlington', 'TX'),
-      createData('819 Lovingham Dr', 'Arlington', 'TX'),
-    ];
-
-    setTableBList(rows);
+    //Call removeDuplicate API to get new TableB list
+    fetch('http://localhost:8080/api/removeDuplicate')
+        .then((response) => {
+          if (response.ok) {
+            console.log("API: removeDuplicate successful");
+            setLoading(false);
+            return response.json();
+          }
+        })
+        .then(data => setTableBList(data))
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   return (
@@ -36,7 +40,7 @@ function App() {
 
       <div style={{paddingTop : '5px'}}>
       <div>
-        <Button variant="contained" onClick={() => {removeDuplicate();}}>Remove</Button>
+        <LoadingButton variant="contained" loading={loading} onClick={() => {removeDuplicate(); setLoading(true)}}>Remove</LoadingButton>
       </div>
       </div>
     </div>
