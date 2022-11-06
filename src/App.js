@@ -1,10 +1,28 @@
-import React from 'react';
-import RemoveBtn from "./RemoveBtn";
+import React, {useState} from 'react';
 import TableA from "./TableA";
 import TableB from "./TableB";
+import Button from '@mui/material/Button';
 
 
 function App() {
+
+  let [tableAList, setTableAList] = useState([]);
+  let [tableBList, setTableBList] = useState([]);
+
+  function createData(address, city, state) {
+    return { address, city, state };
+  }
+
+  function removeDuplicate() {
+    
+    const rows = [
+      createData('836 Cornfield Dr', 'Arlington', 'TX'),
+      createData('819 Lovingham Dr', 'Arlington', 'TX'),
+    ];
+
+    setTableBList(rows);
+  }
+
   return (
     <div style={{marginLeft : '5px'}}>
       <header>
@@ -12,12 +30,14 @@ function App() {
       </header>
 
       <div className="grid-container">
-          <TableA/>
-          <TableB/>
+          <TableA tableAList = {tableAList} setTableAList = {setTableAList}/>
+          <TableB tableBList = {tableBList} setTableBList = {setTableBList} />
       </div>
 
       <div style={{paddingTop : '5px'}}>
-        <RemoveBtn/>
+      <div>
+        <Button variant="contained" onClick={() => {removeDuplicate();}}>Remove</Button>
+      </div>
       </div>
     </div>
   );
