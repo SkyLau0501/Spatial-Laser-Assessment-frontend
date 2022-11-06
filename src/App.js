@@ -11,7 +11,7 @@ function App() {
         <h1>Take home assignment</h1>
       </header>
 
-      <div class="grid-container">
+      <div className="grid-container">
           <TableA/>
           <TableB/>
       </div>
