@@ -6,26 +6,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import strings from './res/strings'
 
 //Table A List Component
 export default function TableA(props) {
 
-    
+  let apiurl = strings.API_PERFIX_URL;
 
-    //only run at the first time page render
-    useEffect(()=> {
-        fetch('http://localhost:8080/api/getTableAData')
-        .then((response) => {
-          if (response.ok) {
-            console.log("API: getTableAData successful");
-            return response.json();
-          }
-        })
-        .then(data => props.setTableAList(data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },[])
+  //only run at the first time page render
+  useEffect(()=> {
+      fetch(apiurl + '/getTableAData')
+      .then((response) => {
+        if (response.ok) {
+          console.log(strings.API_SUCCESSFUL + "getTableAData");
+          return response.json();
+        }
+      })
+      .then(data => props.setTableAList(data))
+      .catch((error) => {
+        console.log(strings.API_FAIL + "getTableAData");
+        console.log(error);
+      });
+  },[])
 
   return (
     <div>

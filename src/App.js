@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import TableA from "./TableA";
 import TableB from "./TableB";
 import LoadingButton from '@mui/lab/LoadingButton';
+import strings from './res/strings'
 
 
 function App() {
@@ -10,19 +11,21 @@ function App() {
   let [tableBList, setTableBList] = useState([]);
   let [loading, setLoading] = useState(false);
 
+  let apiurl = strings.API_PERFIX_URL;
 
   function removeDuplicate() {
     //Call removeDuplicate API to get new TableB list
-    fetch('http://localhost:8080/api/removeDuplicate')
+    fetch(apiurl + '/removeDuplicate')
         .then((response) => {
           if (response.ok) {
-            console.log("API: removeDuplicate successful");
+            console.log(strings.API_SUCCESSFUL + "removeDuplicate");
             setLoading(false);
             return response.json();
           }
         })
         .then(data => setTableBList(data))
         .catch((error) => {
+          console.log(strings.API_FAIL + "removeDuplicate");
           console.log(error);
         });
   }

@@ -6,24 +6,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import strings from './res/strings'
 
 //Table B List Component
 export default function TableB(props) {
 
-    //only run at the first time page render
-    useEffect(()=> {
-        fetch('http://localhost:8080/api/getTableBData')
-        .then((response) => {
-          if (response.ok) {
-            console.log("API: getTableBData successful");
-            return response.json();
-          }
-        })
-        .then(data => props.setTableBList(data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },[])
+  let apiurl = strings.API_PERFIX_URL;
+
+  //only run at the first time page render
+  useEffect(()=> {
+      fetch(apiurl + '/getTableBData')
+      .then((response) => {
+        if (response.ok) {
+          console.log(strings.API_SUCCESSFUL + "getTableBData");
+          return response.json();
+        }
+      })
+      .then(data => props.setTableBList(data))
+      .catch((error) => {
+        console.log(strings.API_FAIL + "getTableBData");
+        console.log(error);
+      });
+  },[])
 
   return (
     <div>
